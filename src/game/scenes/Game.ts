@@ -23,6 +23,9 @@ export class Game extends Scene {
     preload() {
         this.load.setPath(GameConfig.ASSETS.BASE_PATH);
 
+        // Load background image
+        this.load.image("background", GameConfig.ASSETS.BACKGROUND);
+
         // Load character frames for animation
         this.load.image(
             `${GameConfig.ASSETS.CHARACTER.key}_1`,
@@ -63,12 +66,6 @@ export class Game extends Scene {
             GameConfig.ASSETS.LANDMARKS.BA_NA_HILLS.path
         );
 
-        // Load popup assets
-        this.load.image(
-            GameConfig.ASSETS.POPUP_BG.key,
-            GameConfig.ASSETS.POPUP_BG.path
-        );
-
         // Load landmark check-in images
         GameConfig.LANDMARKS.forEach((landmark) => {
             this.load.image(
@@ -84,6 +81,13 @@ export class Game extends Scene {
 
         // Create a container for game elements that will shake
         this.gameContainer = this.add.container(0, 0);
+
+        const backgroundImage = this.add
+            .image(0, 0, "background")
+            .setScale(1)
+            .setOrigin(0, 0);
+        backgroundImage.setDisplaySize(this.scale.width, this.scale.height);
+        this.gameContainer.add(backgroundImage);
 
         // Create animation
         this.anims.create({
@@ -128,22 +132,13 @@ export class Game extends Scene {
                 .setScale(GameConfig.SCALES.LANDMARKS)
                 .setOrigin(0.5, 1);
             this.gameContainer.add(landmarkImage);
-
-            const landmarkText = this.add
-                .text(
-                    landmark.position.x,
-                    landmark.position.y + 20,
-                    landmark.name,
-                    GameConfig.TEXT_STYLES.LANDMARK_LABEL
-                )
-                .setOrigin(0.5, 0);
-            this.gameContainer.add(landmarkText);
         });
 
         // Add StarPi at starting position (ES4) with animation playing
         this.starPi = this.add
             .sprite(
-                this.landmarks[0].position.x,
+                this.landmarks[0].position.x +
+                    GameConfig.LAYOUT.CHARACTER_X_OFFSET,
                 this.landmarks[0].position.y -
                     GameConfig.LAYOUT.CHARACTER_Y_OFFSET,
                 `${GameConfig.ASSETS.CHARACTER.key}_1`
@@ -329,7 +324,7 @@ export class Game extends Scene {
         // Calculate control points for a high parabolic arc
         const distance = Math.abs(endX - startX);
         const midX = (startX + endX) / 2;
-        const jumpHeight = distance * 0.5; // half the distance
+        const jumpHeight = distance * 0.5; // Half the distance
         const controlY = startY - jumpHeight; // Control point high above to create arc
 
         // Add a quadratic curve to create the parabolic path
@@ -381,120 +376,27 @@ export class Game extends Scene {
         // Hide StarPi
         this.starPi.setVisible(false);
 
-        // Set panel dimensions from config
-        const panelWidth = GameConfig.ANIMATIONS.POPUP.PANEL_WIDTH;
-        const panelHeight = GameConfig.ANIMATIONS.POPUP.PANEL_HEIGHT;
-        const cornerRadius = GameConfig.ANIMATIONS.POPUP.CORNER_RADIUS;
-
         // Create a container for the popup elements at center of screen
         const popupContainer = this.add.container(
             GameConfig.LAYOUT.CENTER_X,
             GameConfig.LAYOUT.CENTER_Y
         );
 
-        // Create panel background
-        const panel = this.add.graphics();
-        panel.fillStyle(
-            GameConfig.ANIMATIONS.POPUP.FILL_COLOR,
-            GameConfig.ANIMATIONS.POPUP.FILL_ALPHA
-        );
-        panel.lineStyle(
-            GameConfig.ANIMATIONS.POPUP.LINE_WIDTH,
-            GameConfig.ANIMATIONS.POPUP.STROKE_COLOR,
-            1
-        );
-
-        // Draw the rounded rectangle
-        panel.fillRoundedRect(
-            -panelWidth / 2,
-            -panelHeight / 2,
-            panelWidth,
-            panelHeight,
-            cornerRadius
-        );
-        panel.strokeRoundedRect(
-            -panelWidth / 2,
-            -panelHeight / 2,
-            panelWidth,
-            panelHeight,
-            cornerRadius
-        );
-
-        // Add the graphics to the container
-        popupContainer.add(panel);
-
         // Create firework particles
         this.createFireworks();
 
-        // Add StarPi at the landmark image
+        // Add check-in image
         const landmarkImage = this.add
             .image(0, -40, landmark.image)
             .setOrigin(0.5)
             .setScale(GameConfig.SCALES.CHECKIN_IMAGE);
         popupContainer.add(landmarkImage);
 
-        // Add "Congratulations" text
-        const congratsText = this.add
-            .text(
-                0,
-                -panelHeight / 2 +
-                    GameConfig.ANIMATIONS.TEXT_POSITIONS.TITLE_OFFSET / 2,
-                "Congratulations!",
-                {
-                    ...GameConfig.TEXT_STYLES.CONGRATS_TEXT,
-                    fontSize: 42,
-                    stroke: "#000000",
-                    strokeThickness: 6,
-                }
-            )
-            .setOrigin(0.5);
-        popupContainer.add(congratsText);
-
-        // Add popup title with destination name
-        const title = this.add
-            .text(
-                0,
-                -GameConfig.ANIMATIONS.TEXT_POSITIONS.TITLE_OFFSET,
-                `You've reached ${landmark.name}!`,
-                {
-                    ...GameConfig.TEXT_STYLES.POPUP_TITLE,
-                    stroke: "#ffffff",
-                    strokeThickness: 3,
-                }
-            )
-            .setOrigin(0.5);
-        popupContainer.add(title);
-
-        // Add press count
-        const pressText = this.add
-            .text(
-                0,
-                -GameConfig.ANIMATIONS.TEXT_POSITIONS.PRESS_COUNT_OFFSET,
-                `Total presses: ${this.pressCounter}`,
-                GameConfig.TEXT_STYLES.POPUP_TEXT
-            )
-            .setOrigin(0.5);
-        popupContainer.add(pressText);
-
-        // Add gift text with emphasis
-        const giftText = this.add
-            .text(
-                0,
-                GameConfig.ANIMATIONS.TEXT_POSITIONS.GIFT_TEXT_OFFSET,
-                `Gift: ${landmark.gift}`,
-                {
-                    ...GameConfig.TEXT_STYLES.GIFT,
-                    fontSize: 36,
-                }
-            )
-            .setOrigin(0.5);
-        popupContainer.add(giftText);
-
         // Add restart button
         const restartButton = this.add
             .text(
                 0,
-                GameConfig.ANIMATIONS.TEXT_POSITIONS.RESTART_BUTTON_OFFSET,
+                GameConfig.LAYOUT.POPUP.RESTART_BUTTON_OFFSET,
                 "PLAY AGAIN",
                 {
                     ...GameConfig.TEXT_STYLES.PLAY_AGAIN,
@@ -525,20 +427,6 @@ export class Game extends Scene {
             ease: GameConfig.ANIMATIONS.POPUP.APPEAR_EASE,
         });
 
-        // Add emphasis animation to gift text
-        this.time.addEvent({
-            delay: GameConfig.ANIMATIONS.POPUP.EMPHASIS_DELAY,
-            callback: () => {
-                this.tweens.add({
-                    targets: giftText,
-                    scale: 1.1,
-                    duration: GameConfig.ANIMATIONS.POPUP.EMPHASIS_DURATION * 2,
-                    yoyo: true,
-                    repeat: GameConfig.ANIMATIONS.POPUP.EMPHASIS_REPEAT,
-                });
-            },
-        });
-
         restartButton.on("pointerdown", () => {
             // Animate the popup disappearing
             this.tweens.add({
@@ -554,7 +442,9 @@ export class Game extends Scene {
                     this.starPi.setVisible(true);
 
                     // Reset StarPi to starting position
-                    this.starPi.x = this.landmarks[0].position.x;
+                    this.starPi.x =
+                        this.landmarks[0].position.x +
+                        GameConfig.LAYOUT.CHARACTER_X_OFFSET;
                     this.starPi.y =
                         this.landmarks[0].position.y -
                         GameConfig.LAYOUT.CHARACTER_Y_OFFSET;
@@ -582,7 +472,6 @@ export class Game extends Scene {
         });
     }
 
-    // Add new method for fireworks animation
     createFireworks() {
         // Create fireworks with code-generated shapes
         const colors = GameConfig.ANIMATIONS.FIREWORKS.COLORS;

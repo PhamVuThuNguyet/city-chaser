@@ -1,29 +1,31 @@
 export const GameConfig = {
     // Game timing settings
-    GAME_DURATION_SECONDS: 60,
+    GAME_DURATION_SECONDS: 10,
     KEY_PRESS_COOLDOWN_MS: 200,
 
     // Visual settings
-    COOLDOWN_COLOR_READY: 0x00ff00, // Green
-    COOLDOWN_COLOR_WAIT: 0xff0000, // Red
     SCALES: {
         CHARACTER: 0.05,
-        LANDMARKS: 0.5,
-        CHECKIN_IMAGE: 0.4,
+        LANDMARKS: 0.9,
+        CHECKIN_IMAGE: 0.7,
     },
 
     // Layout settings for 1920x1080 resolution
     LAYOUT: {
         CENTER_X: 960,
         CENTER_Y: 540,
-        TITLE_Y: 120,
-        INSTRUCTIONS_Y: 220,
-        COUNTER_Y: 320,
-        TIMER_Y: 400,
-        START_BUTTON_Y: 600,
+        TITLE_Y: 80,
+        INSTRUCTIONS_Y: 170,
+        COUNTER_Y: 250,
+        TIMER_Y: 320,
+        START_BUTTON_Y: 430,
         LANDMARKS_Y: 900,
-        CHARACTER_Y_OFFSET: 100, // How far above landmarks the character appears
+        CHARACTER_X_OFFSET: 120,
+        CHARACTER_Y_OFFSET: 50, // How far above landmarks the character appears
         SCREEN_PADDING: 10, // Minimum padding from screen edges
+        POPUP: {
+            RESTART_BUTTON_OFFSET: 350, // Y offset for restart button from center},
+        },
     },
 
     // Animation settings
@@ -34,9 +36,8 @@ export const GameConfig = {
             REPEAT: 2, // Number of shake repeats
         },
         POPUP: {
-            PANEL_WIDTH: 700, // Width of popup panel
-            PANEL_HEIGHT: 500, // Height of popup panel
-            CORNER_RADIUS: 20, // Corner radius of popup panel
+            PANEL_WIDTH: 900, // Width of popup panel
+            PANEL_HEIGHT: 800, // Height of popup panel
             APPEAR_DURATION: 800, // Duration of popup appearance animation (ms)
             APPEAR_EASE: "Back.Out", // Easing for popup appearance
             EMPHASIS_DELAY: 1000, // Delay before emphasis animation (ms)
@@ -46,10 +47,6 @@ export const GameConfig = {
             DISAPPEAR_DURATION: 300, // Duration for popup disappearance (ms)
             INITIAL_SCALE: 0.1, // Initial scale for popup
             FINAL_SCALE: 1, // Final scale for popup
-            FILL_COLOR: 0x333366, // Fill color for popup panel
-            STROKE_COLOR: 0x9999ff, // Stroke color for popup panel
-            FILL_ALPHA: 0.9, // Fill alpha for popup panel
-            LINE_WIDTH: 5, // Line width for popup panel
         },
         FIREWORKS: {
             COUNT: 30,
@@ -74,57 +71,45 @@ export const GameConfig = {
             GRAVITY: 200,
             ORIGIN_VARIATION: 100,
         },
-        TEXT_POSITIONS: {
-            TITLE_OFFSET: 140, // Y offset for popup title from center
-            PRESS_COUNT_OFFSET: 70, // Y offset for press count text from center
-            GIFT_TEXT_OFFSET: 70, // Y offset for gift text from center
-            RESTART_BUTTON_OFFSET: 170, // Y offset for restart button from center
-        },
     },
 
     // Landmark settings
     LANDMARKS: [
         {
             name: "ES4 Building",
-            position: { x: 200, y: 900 },
+            position: { x: 200, y: 830 },
             threshold: 0,
-            image: "starpi-es4",
-            gift: "ES4 Notebook!",
+            image: "lose",
         },
         {
             name: "Dragon Bridge",
-            position: { x: 520, y: 900 },
+            position: { x: 520, y: 810 },
             threshold: 10,
-            image: "starpi-dragon",
-            gift: "Dragon Bridge Miniature!",
+            image: "win-1",
         },
         {
             name: "Marble Mountains",
-            position: { x: 840, y: 900 },
+            position: { x: 840, y: 810 },
             threshold: 15,
-            image: "starpi-marble",
-            gift: "Marble Mountains Postcard!",
+            image: "win-2",
         },
         {
             name: "Lady Buddha",
-            position: { x: 1160, y: 900 },
+            position: { x: 1160, y: 810 },
             threshold: 20,
-            image: "starpi-lady",
-            gift: "Lady Buddha Keychain!",
+            image: "win-3",
         },
         {
             name: "Han River Bridge",
-            position: { x: 1480, y: 900 },
+            position: { x: 1480, y: 810 },
             threshold: 25,
-            image: "starpi-han",
-            gift: "Han River Bridge Model!",
+            image: "win-4",
         },
         {
             name: "Ba Na Hills",
-            position: { x: 1800, y: 900 },
+            position: { x: 1800, y: 810 },
             threshold: 30,
-            image: "starpi-bana",
-            gift: "Ba Na Hills Golden Ticket!",
+            image: "win-5",
         },
     ],
 
@@ -174,40 +159,7 @@ export const GameConfig = {
                 bottom: 15,
             },
         },
-        GIFT: {
-            fontFamily: "Arial Black",
-            fontSize: 30,
-            color: "#ffff00",
-            stroke: "#000000",
-            strokeThickness: 4,
-            align: "center",
-            wordWrap: { width: 500 },
-        },
-        CONGRATS_TEXT: {
-            fontFamily: "Arial Black",
-            fontSize: 30,
-            color: "#ffff00",
-            stroke: "#ffffff",
-            strokeThickness: 3,
-            align: "center",
-            wordWrap: { width: 500 },
-        },
-        POPUP_TITLE: {
-            fontFamily: "Arial Black",
-            fontSize: 28,
-            color: "#000000",
-            stroke: "#ffffff",
-            strokeThickness: 1,
-            align: "center",
-            wordWrap: { width: 500 },
-        },
-        POPUP_TEXT: {
-            fontFamily: "Arial",
-            fontSize: 28,
-            color: "#ffffff",
-            align: "center",
-            wordWrap: { width: 500 },
-        },
+
         PLAY_AGAIN: {
             fontFamily: "Arial Black",
             fontSize: 28,
@@ -225,6 +177,7 @@ export const GameConfig = {
     // Asset keys and paths
     ASSETS: {
         BASE_PATH: "assets/citychase",
+        BACKGROUND: "background.jpg",
         CHARACTER: {
             key: "starpi",
             path: "starpi-1.png",
@@ -240,8 +193,8 @@ export const GameConfig = {
         },
         LANDMARKS: {
             ES4: {
-                key: "es4",
-                path: "es4.png",
+                key: "es4-building",
+                path: "es4-building.png",
             },
             DRAGON_BRIDGE: {
                 key: "dragon-bridge",
@@ -264,10 +217,7 @@ export const GameConfig = {
                 path: "ba-na-hills.png",
             },
         },
-        POPUP_BG: {
-            key: "popup-bg",
-            path: "popup-bg.png",
-        },
+
         // Helper function for landmark check-in images
         getCheckInImagePath: (imageKey: string) => `${imageKey}.png`,
     },
