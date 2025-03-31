@@ -1,7 +1,7 @@
 export const GameConfig = {
     // Game timing settings
-    GAME_DURATION_SECONDS: 10,
-    KEY_PRESS_COOLDOWN_MS: 200,
+    GAME_DURATION_SECONDS: 15,
+    KEY_PRESS_COOLDOWN_MS: 120,
 
     // Visual settings
     SCALES: {
@@ -47,6 +47,8 @@ export const GameConfig = {
             DISAPPEAR_DURATION: 300, // Duration for popup disappearance (ms)
             INITIAL_SCALE: 0.1, // Initial scale for popup
             FINAL_SCALE: 1, // Final scale for popup
+            FILL_COLOR: 0x333366, // Fill color for popup panel
+            FILL_ALPHA: 0.5, // Fill alpha for popup panel
         },
         FIREWORKS: {
             COUNT: 30,
@@ -77,38 +79,38 @@ export const GameConfig = {
     LANDMARKS: [
         {
             name: "ES4 Building",
-            position: { x: 200, y: 830 },
+            position: { x: 200, y: 815 },
             threshold: 0,
             image: "lose",
         },
         {
-            name: "Dragon Bridge",
+            name: "Lady Buddha",
             position: { x: 520, y: 810 },
-            threshold: 10,
+            threshold: 60,
             image: "win-1",
         },
         {
-            name: "Marble Mountains",
+            name: "Han River Bridge",
             position: { x: 840, y: 810 },
-            threshold: 15,
+            threshold: 80,
             image: "win-2",
         },
         {
-            name: "Lady Buddha",
+            name: "Marble Mountains",
             position: { x: 1160, y: 810 },
-            threshold: 20,
+            threshold: 85,
             image: "win-3",
         },
         {
-            name: "Han River Bridge",
+            name: "Ba Na Hills",
             position: { x: 1480, y: 810 },
-            threshold: 25,
+            threshold: 90,
             image: "win-4",
         },
         {
-            name: "Ba Na Hills",
+            name: "Dragon Bridge",
             position: { x: 1800, y: 810 },
-            threshold: 30,
+            threshold: 95,
             image: "win-5",
         },
     ],

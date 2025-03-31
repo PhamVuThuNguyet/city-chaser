@@ -382,8 +382,22 @@ export class Game extends Scene {
             GameConfig.LAYOUT.CENTER_Y
         );
 
-        // Create firework particles
-        this.createFireworks();
+        // Create panel background
+        const panel = this.add.graphics();
+        panel.fillStyle(
+            GameConfig.ANIMATIONS.POPUP.FILL_COLOR,
+            GameConfig.ANIMATIONS.POPUP.FILL_ALPHA
+        );
+        panel.fillRoundedRect(
+            -GameConfig.LAYOUT.CENTER_X,
+            -GameConfig.LAYOUT.CENTER_Y,
+            1920,
+            1080,
+            0
+        );
+
+        // Add the graphics to the container
+        popupContainer.add(panel);
 
         // Add check-in image
         const landmarkImage = this.add
@@ -418,6 +432,9 @@ export class Game extends Scene {
         popupContainer.setScale(GameConfig.ANIMATIONS.POPUP.INITIAL_SCALE);
         popupContainer.setAlpha(0);
 
+        // Create firework particles
+        this.createFireworks();
+
         // Animate the popup appearing
         this.tweens.add({
             targets: popupContainer,
@@ -451,6 +468,10 @@ export class Game extends Scene {
 
                     // Restart walking animation
                     this.starPi.play(GameConfig.ASSETS.CHARACTER.animation.key);
+
+                    // Reset presses count and timer
+                    this.timeRemaining = GameConfig.GAME_DURATION_SECONDS;
+                    this.pressCountText.setText(`Presses: 0`);
 
                     // Add start button again
                     const startButton = this.add
