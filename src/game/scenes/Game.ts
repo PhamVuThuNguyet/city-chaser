@@ -443,6 +443,7 @@ export class Game extends Scene {
 
                     // Reset presses count and timer
                     this.timeRemaining = GameConfig.GAME_DURATION_SECONDS;
+                    this.timerText.setText(`Time: ${this.timeRemaining}s`);
                     this.pressCountText.setText(`Presses: 0`);
 
                     // Add start button again
