@@ -73,6 +73,10 @@ export class Game extends Scene {
                 GameConfig.ASSETS.getCheckInImagePath(landmark.image)
             );
         });
+
+        // Load button images
+        this.load.image("start", GameConfig.ASSETS.BUTTON.START);
+        this.load.image("play_again", GameConfig.ASSETS.BUTTON.PLAY_AGAIN);
     }
 
     create() {
@@ -99,28 +103,6 @@ export class Game extends Scene {
             frameRate: GameConfig.ASSETS.CHARACTER.animation.frameRate,
             repeat: GameConfig.ASSETS.CHARACTER.animation.repeat,
         });
-
-        // Add title
-        const title = this.add
-            .text(
-                GameConfig.LAYOUT.CENTER_X,
-                GameConfig.LAYOUT.TITLE_Y,
-                "Da Nang City Chase",
-                GameConfig.TEXT_STYLES.TITLE
-            )
-            .setOrigin(0.5);
-        this.gameContainer.add(title);
-
-        // Instructions
-        const instructions = this.add
-            .text(
-                GameConfig.LAYOUT.CENTER_X,
-                GameConfig.LAYOUT.INSTRUCTIONS_Y,
-                `Press ENTER as fast as you can for ${GameConfig.GAME_DURATION_SECONDS} seconds!\nHelp StarPi visit Da Nang landmarks!`,
-                GameConfig.TEXT_STYLES.INSTRUCTIONS
-            )
-            .setOrigin(0.5);
-        this.gameContainer.add(instructions);
 
         // Add landmarks
         this.landmarks.forEach((landmark) => {
@@ -152,7 +134,7 @@ export class Game extends Scene {
         // Add press counter
         this.pressCountText = this.add
             .text(
-                GameConfig.LAYOUT.CENTER_X,
+                GameConfig.LAYOUT.COUNTER_X,
                 GameConfig.LAYOUT.COUNTER_Y,
                 "Presses: 0",
                 GameConfig.TEXT_STYLES.COUNTER
@@ -163,7 +145,7 @@ export class Game extends Scene {
         // Add timer
         this.timerText = this.add
             .text(
-                GameConfig.LAYOUT.CENTER_X,
+                GameConfig.LAYOUT.TIMER_X,
                 GameConfig.LAYOUT.TIMER_Y,
                 `Time: ${GameConfig.GAME_DURATION_SECONDS}s`,
                 GameConfig.TEXT_STYLES.COUNTER
@@ -173,13 +155,13 @@ export class Game extends Scene {
 
         // Add start button
         const startButton = this.add
-            .text(
+            .image(
                 GameConfig.LAYOUT.CENTER_X,
                 GameConfig.LAYOUT.START_BUTTON_Y,
-                "START GAME",
-                GameConfig.TEXT_STYLES.BUTTON
+                "start"
             )
             .setOrigin(0.5)
+            .setScale(GameConfig.SCALES.BUTTONS)
             .setInteractive();
 
         startButton.on("pointerdown", () => {
@@ -408,23 +390,13 @@ export class Game extends Scene {
 
         // Add restart button
         const restartButton = this.add
-            .text(
+            .image(
                 0,
                 GameConfig.LAYOUT.POPUP.RESTART_BUTTON_OFFSET,
-                "PLAY AGAIN",
-                {
-                    ...GameConfig.TEXT_STYLES.PLAY_AGAIN,
-                    fontSize: 32,
-                    backgroundColor: "#ff3333",
-                    padding: {
-                        left: 30,
-                        right: 30,
-                        top: 15,
-                        bottom: 15,
-                    },
-                }
+                "play_again"
             )
             .setOrigin(0.5)
+            .setScale(GameConfig.SCALES.BUTTONS)
             .setInteractive();
         popupContainer.add(restartButton);
 
@@ -475,13 +447,13 @@ export class Game extends Scene {
 
                     // Add start button again
                     const startButton = this.add
-                        .text(
+                        .image(
                             GameConfig.LAYOUT.CENTER_X,
                             GameConfig.LAYOUT.START_BUTTON_Y,
-                            "START GAME",
-                            GameConfig.TEXT_STYLES.BUTTON
+                            "start"
                         )
                         .setOrigin(0.5)
+                        .setScale(GameConfig.SCALES.BUTTONS)
                         .setInteractive();
 
                     startButton.on("pointerdown", () => {

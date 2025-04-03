@@ -8,21 +8,20 @@ export const GameConfig = {
         CHARACTER: 0.05,
         LANDMARKS: 0.9,
         CHECKIN_IMAGE: 0.7,
+        BUTTONS: 0.5,
     },
 
     // Layout settings for 1920x1080 resolution
     LAYOUT: {
         CENTER_X: 960,
         CENTER_Y: 540,
-        TITLE_Y: 80,
-        INSTRUCTIONS_Y: 170,
-        COUNTER_Y: 250,
+        COUNTER_X: 800,
+        COUNTER_Y: 320,
+        TIMER_X: 1100,
         TIMER_Y: 320,
         START_BUTTON_Y: 430,
-        LANDMARKS_Y: 900,
         CHARACTER_X_OFFSET: 120,
         CHARACTER_Y_OFFSET: 50, // How far above landmarks the character appears
-        SCREEN_PADDING: 10, // Minimum padding from screen edges
         POPUP: {
             RESTART_BUTTON_OFFSET: 350, // Y offset for restart button from center},
         },
@@ -117,69 +116,18 @@ export const GameConfig = {
 
     // Text settings
     TEXT_STYLES: {
-        TITLE: {
-            fontFamily: "Arial Black",
-            fontSize: 64,
-            color: "#ffffff",
-            stroke: "#000000",
-            strokeThickness: 8,
-            align: "center",
-        },
-        INSTRUCTIONS: {
-            fontFamily: "Arial",
-            fontSize: 32,
-            color: "#ffffff",
-            stroke: "#000000",
-            strokeThickness: 4,
-            align: "center",
-        },
-        LANDMARK_LABEL: {
-            fontFamily: "Arial",
-            fontSize: 20,
-            color: "#ffffff",
-            stroke: "#000000",
-            strokeThickness: 4,
-            align: "center",
-        },
         COUNTER: {
-            fontFamily: "Arial",
-            fontSize: 42,
-            color: "#ffffff",
-            stroke: "#000000",
-            strokeThickness: 6,
-            align: "center",
-        },
-        BUTTON: {
-            fontFamily: "Arial Black",
-            fontSize: 42,
-            color: "#ffffff",
-            backgroundColor: "#008800",
-            padding: {
-                left: 30,
-                right: 30,
-                top: 15,
-                bottom: 15,
-            },
-        },
-
-        PLAY_AGAIN: {
-            fontFamily: "Arial Black",
-            fontSize: 28,
-            color: "#ffffff",
-            backgroundColor: "#ff5555",
-            padding: {
-                left: 25,
-                right: 25,
-                top: 12,
-                bottom: 12,
-            },
+            fontFamily: "Inter",
+            fontSize: 36,
+            color: "#1040FF",
         },
     },
 
     // Asset keys and paths
     ASSETS: {
         BASE_PATH: "assets/citychase",
-        BACKGROUND: "background.jpg",
+        BACKGROUND: "background.png",
+        BUTTON: { START: "start.png", PLAY_AGAIN: "play-again.png" },
         CHARACTER: {
             key: "starpi",
             path: "starpi-1.png",
