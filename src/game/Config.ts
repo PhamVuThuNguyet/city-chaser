@@ -15,9 +15,9 @@ export const GameConfig = {
     LAYOUT: {
         CENTER_X: 960,
         CENTER_Y: 540,
-        COUNTER_X: 800,
+        COUNTER_X: 730,
         COUNTER_Y: 320,
-        TIMER_X: 1100,
+        TIMER_X: 1195,
         TIMER_Y: 320,
         START_BUTTON_Y: 430,
         CHARACTER_X_OFFSET: 120,
@@ -119,6 +119,7 @@ export const GameConfig = {
         COUNTER: {
             fontFamily: "Inter",
             fontSize: 36,
+            fontWeight: 700,
             color: "#1040FF",
         },
     },
